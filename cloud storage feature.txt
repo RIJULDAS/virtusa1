@@ -1,0 +1,112 @@
+There are also several features that come with Cloud Storage. I will cover these at
+a high level for now because we will soon dive
+deeper into some of them. Earlier in the core series, we already talked
+a little bit about customer-supplied
+encryption keys when attaching persistent disks
+to virtual machines. This allows you to supply your own encryption keys instead of the
+Google-managed keys, which is also available
+for Cloud Storage. Cloud Search also provides
+Object Lifecycle Management, which lets you automatically
+delete or archive objects. Another feature is
+Object Versioning, which allows you to maintain multiple versions of
+objects in your pocket. You are charged for the versions as if there
+are multiple files, which is something
+to keep in mind. Cloud Storage also offers directory synchronization
+so that you can sync a VM directory
+with a bucket. We will discuss object change
+notification, data import, and strong consistency in
+more detail after going into Object Versioning and Object
+Lifecycle Management. In Cloud Storage,
+objects are immutable, which means that
+an uploaded object cannot change throughout
+its storage lifetime. To support the retrieval of objects that are
+deleted or are written, Cloud Storage offers the
+Object Versioning feature. Object Versioning can be
+enabled for a bucket. Once enabled, Cloud
+Storage creates an archived version of an object each time the live version of the object is
+overwritten or deleted. The archive version retains
+the name of the object, but is uniquely identified by a generation number as
+illustrated on this slide by g1. When Object Versioning
+is enabled, you can list archived
+versions of an object, restore the live version of
+an object to an older state, or permanently delete an
+archived version as needed. You can turn versioning on or
+off or a bucket at anytime. Turning versioning off leaves
+existing object versions in place and causes
+the bucket to stop accumulating new archived
+object versions. For more information
+on Object Versioning, refer to the link
+section of this video. To support common use cases like setting a time
+to live for objects, archiving older
+versions of objects, or downgrading storage classes of objects to help manage costs, Cloud Storage offers Object
+Lifecycle Management. You can assign a lifecycle management configuration
+to a bucket. The configuration is a set of rules that apply to all
+objects in the buckets. When an object meets the
+criteria of one of the rules, Cloud Storage
+automatically performs a specified action on the object. Here are some example use cases. First, downgrade the
+storage class of objects older than a year
+to Cloud line storage. Second, delete objects created
+before a specific date, for example, January 1st, 2017. Third, keep only the three most recent versions
+of each object, any bucket with
+versioning-enabled. Object inspection occurs
+in asynchronous batches, so rules may not be
+applied immediately. Also, updates to your
+lifecycle configuration may take up to 24-hours
+to go into effect. This means that when you change your lifecycle configuration, Object Lifecycle Management
+may still perform actions based on the old configuration
+for up to 24-hours, so keep that in mind. For more on Object
+Lifecycle Management, refer to the link
+section of this video. Object change notification
+can be used to notify an application when an object is updated or added to a bucket
+through a watch request. Completing a watch request creates a new
+notification channel. The notification channel
+is the means by which the notification message is sent to an application
+watching a bucket. As of this recording, the only type of
+notification channels supported is a webhook. After a notification
+channel is initiated, Cloud Search notifies
+the application at any time an object is added, updated, or removed
+from the bucket. For example, as shown here, when you add a new
+picture to a bucket, an application can be notified
+to create a thumbnail. However, pop-ups
+notifications are really the recommended
+way to track changes to objects in your Cloud Storage buckets
+because they're faster, more flexible, easy to set
+up, and more cost-effective. Pop-ups is Google's distributed real-time
+messaging service, which is covered in the
+developing applications courses. The Cloud Console, allows you to upload individual
+files to a bucket. But what if you have
+to upload terabytes, even petabytes of data? There are three services that address this: Transfer Appliance, Storage Transfer Service,
+and Offline Media Import. Transfer Appliance is
+a hardware appliance you can use to securely
+migrate large volumes of data from hundreds
+of terabytes up to one petabyte to Google Cloud without disrupting
+business operations. The images on the slide
+are Transfer Appliances. The Storage Transfer
+Service enables high-performance
+imports of online data. The data source can be
+another Cloud Storage bucket, an Amazon S3 bucket, or an HTTP, HTTPS location. Finally, offline media import
+is a third-party service, where physical media
+such as storage arrays, hard disk drives, tapes, and USB flash drives is sent to a provider
+who uploads the data. For more information on
+these three services, refer to the links
+section of this video. When you upload an object to Cloud Storage and you
+receive a success response, the object is immediately
+available for download and metadata operations
+from any location where Google offers service. This is true whether you create a new object or overwrite
+an existing object. Because uploads are
+strongly consistent, you will never receive a
+404 NOT Found response or stale data for a read-after-write or
+read-after-metadata-update operation. Strong global consistency also extends to the deletion
+operation of objects. If a deletion request succeeds, an immediate attempt to
+download the object or its metadata will result in
+a 404 Not Found status code. You get the 404 error
+because the object no longer exists after the
+delete operation succeeds. Bucket listing is
+strongly consistent. For example, if you
+create a bucket, then immediately perform
+a list bucket operation, the new bucket appears in the
+returned list of buckets. Finally, object listing is
+also strongly consistent. For example, if you upload
+an object to a bucket and then immediately perform
+a list object operations, the new object appears in the
+returned list of objects.
